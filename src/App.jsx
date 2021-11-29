@@ -4,18 +4,18 @@ import GetDb from './utils/GetDb';
 import Delete from './utils/Delete';
 import useFormData from './hooks/useFormData';
 import Post from './utils/Post';
+import Update from './utils/Update';
+
+
 
 function App() {
   const{form, formData, updateFormData}=useFormData()
   const [store,setStore]=useState([])
   const [ejecutarConsulta,setEjecutarConsulta]=useState(true)
+  
  
   useEffect(()=>{
-    if(ejecutarConsulta){
       GetDb(setStore,setEjecutarConsulta);
-      console.log("consultas")
-    }
-    
     
   },[ejecutarConsulta])
 
@@ -23,8 +23,10 @@ function App() {
     e.preventDefault(); 
     Post(formData)
     setEjecutarConsulta(true)
+    form.current.reset();
     
   }
+
 
 
 
@@ -34,34 +36,74 @@ function App() {
 
       <form ref={form} onSubmit={submitForm} onChange={updateFormData}>
         <input type="text" name="name"></input>
-        <input type="submit"></input>
-        
+        <input type="submit"></input>    
       </form>
 
+
+      <table>
+        <thead>
+          <tr>
+            <td>id</td>
+            <td>Nombre</td>
+            <td>Esta Completado?</td>
+            
+          </tr>
+        </thead>
+        <tbody>
       {store.map((dato)=>{
         return(
-        <Lista dato={dato} setEjecutarConsulta={setEjecutarConsulta}/>
+        <Lista key={dato.id}dato={dato} setEjecutarConsulta={setEjecutarConsulta}/>
         )
       })}
-      
+      </tbody>
+    </table>
 
     </div>
   );
+  
 }
-
 const Lista =({dato,setEjecutarConsulta})=>{
+  const [actualizar,setActualizar]=useState(false)
+  const [infoDato, setInfoDato] = useState({
+    id: dato.id,
+    name: dato.name,
+  });
+  
+  
 
   return (
-    <div >
-          <span>{dato.name}</span>
+    <tr >
+          <td>{dato.id}</td>
+          {actualizar?
+          (<>
+          <input defaultValue={dato.name}   type="text" onChange={(e) => {setInfoDato({ ...infoDato, name: e.target.value })}}></input>
+          <td>{dato.isCompleted? "SI" : "NO"}</td>
           <button onClick={()=>{
+            Update(infoDato)
+            setActualizar(false)
+            setEjecutarConsulta(true)}}>Actualizar</button>
+          <button onClick={()=>{setActualizar(false)}}>Cancelar</button>
+          </>)
+          :(<>
+          <td>{dato.name}</td>
+          <td>{dato.isCompleted? "SI" : "NO"}</td>
+          <td><button onClick={()=>setActualizar(true)}>Actualizar</button></td>
+          <td > <button onClick={()=>{
             Delete(dato.id)
             setEjecutarConsulta(true)
-            }}>eliminar</button>
             
-      </div>    
+            }}>eliminar</button></td>
+
+          </>)}
+          
+         
+            
+         
+            
+      </tr>    
     )
 }
+
 
 
 
