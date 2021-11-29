@@ -7,11 +7,12 @@ import { useEjecutarConsulta } from '../context/EjecutarConsulta';
 const Lista =({dato})=>{
     const {setEjecutarConsulta}=useEjecutarConsulta()
     const [actualizar,setActualizar]=useState(false)
-    const [edit,setEdit]=useState('')
     const [infoDato, setInfoDato] = useState({
       id: dato.id,
       name: dato.name,
     });
+
+    
     
     
     return (
@@ -31,14 +32,14 @@ const Lista =({dato})=>{
             </td>
               </>):(<>
               <td>{dato.name}</td>
-              <td>{dato.completed?"SI" : "NO"}</td>
+              <td>{dato.completed?"SI": "NO"}</td>
 
               <td className = "flex justify-center items-center space-x-2">
                 <i onClick={()=>{
                 Check(dato.id)
-                setEjecutarConsulta(true)
-                setEdit("hidden")}} className = "fas fa-check my-1 p-1 text-gray-400 hover:text-green-400 cursor-pointer"/>
-                <i onClick={()=>setActualizar(true)} className = {`fas fa-pen my-1 p-1 text-gray-400 hover:text-yellow-400 cursor-pointer ${edit}`}/>
+                setEjecutarConsulta(true)}} className = "fas fa-check my-1 p-1 text-gray-400 hover:text-green-400 cursor-pointer"/>
+                {dato.completed? null: <i onClick={()=>setActualizar(true)} className = "fas fa-pen my-1 p-1 text-gray-400 hover:text-yellow-400 cursor-pointer "/>}
+                
                 <i onClick={()=>{
                 Delete(dato.id)
                 setEjecutarConsulta(true)

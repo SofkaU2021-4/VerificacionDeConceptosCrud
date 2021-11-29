@@ -27,7 +27,7 @@ const Tabla = () => {
                     <thead className = "thead-color leading-10 text-sm text-gray-700 border-1 text-center">
                         <tr>
                             <th>Id</th>
-                            <th className="w-2" >Nombre</th>
+                            <th  >Nombre</th>
                             <th >¿ Completado ?</th>
                             <th >Acciones</th>
                         </tr>
