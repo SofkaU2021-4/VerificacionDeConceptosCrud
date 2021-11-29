@@ -1,10 +1,11 @@
 import './App.css';
 import { useState,useEffect } from 'react';
 import GetDb from './utils/GetDb';
-import Delete from './utils/Delete';
+import Lista from './components/Lista';
 import useFormData from './hooks/useFormData';
 import Post from './utils/Post';
-import Update from './utils/Update';
+import { EjecutarConsultaContext } from './context/EjecutarConsulta';
+
 
 
 
@@ -16,6 +17,7 @@ function App() {
  
   useEffect(()=>{
       GetDb(setStore,setEjecutarConsulta);
+      console.log("consulte")
     
   },[ejecutarConsulta])
 
@@ -24,84 +26,41 @@ function App() {
     Post(formData)
     setEjecutarConsulta(true)
     form.current.reset();
-    
+
   }
 
-
-
-
   
   return (
-    <div className="App">
+    <EjecutarConsultaContext.Provider value={{ejecutarConsulta,setEjecutarConsulta}}>
 
-      <form ref={form} onSubmit={submitForm} onChange={updateFormData}>
-        <input type="text" name="name"></input>
-        <input type="submit"></input>    
-      </form>
+      <div className="App">
+        <form ref={form} onSubmit={submitForm} onChange={updateFormData}>
+          <input type="text" name="name"></input>
+          <input type="submit"></input>    
+        </form>
 
+        <table>
+          <thead>
+            <tr>
+              <td>id</td>
+              <td>Nombre</td>
+              <td>Esta Completado?</td>
+            </tr>
+          </thead>
+          <tbody>
+        {store.map((dato)=>{
+          return(
+          <Lista key={dato.id}dato={dato} />
+        
+          )
+        })}
+        </tbody>
+      </table>
 
-      <table>
-        <thead>
-          <tr>
-            <td>id</td>
-            <td>Nombre</td>
-            <td>Esta Completado?</td>
-            
-          </tr>
-        </thead>
-        <tbody>
-      {store.map((dato)=>{
-        return(
-        <Lista key={dato.id}dato={dato} setEjecutarConsulta={setEjecutarConsulta}/>
-        )
-      })}
-      </tbody>
-    </table>
-
-    </div>
+      </div>
+    </EjecutarConsultaContext.Provider>
   );
   
-}
-const Lista =({dato,setEjecutarConsulta})=>{
-  const [actualizar,setActualizar]=useState(false)
-  const [infoDato, setInfoDato] = useState({
-    id: dato.id,
-    name: dato.name,
-  });
-  
-  
-
-  return (
-    <tr >
-          <td>{dato.id}</td>
-          {actualizar?
-          (<>
-          <input defaultValue={dato.name}   type="text" onChange={(e) => {setInfoDato({ ...infoDato, name: e.target.value })}}></input>
-          <td>{dato.isCompleted? "SI" : "NO"}</td>
-          <button onClick={()=>{
-            Update(infoDato)
-            setActualizar(false)
-            setEjecutarConsulta(true)}}>Actualizar</button>
-          <button onClick={()=>{setActualizar(false)}}>Cancelar</button>
-          </>)
-          :(<>
-          <td>{dato.name}</td>
-          <td>{dato.isCompleted? "SI" : "NO"}</td>
-          <td><button onClick={()=>setActualizar(true)}>Actualizar</button></td>
-          <td > <button onClick={()=>{
-            Delete(dato.id)
-            setEjecutarConsulta(true)
-            
-            }}>eliminar</button></td>
-
-          </>)}
-          
-         
-            
-         
-            
-      </tr>    
-    )
 }
 
 
