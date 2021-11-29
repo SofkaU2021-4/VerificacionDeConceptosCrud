@@ -1,3 +1,22 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Poppins;
+  }
+  
+  td{
+        text-align: center;
+  }
+
+  .thead-color{
+    background-color: #F4F4F4;
+  }
+  
+  .tbody-border{
+    border-bottom: 1px solid;
+    border-color: #ebebeb;
+  }
+  
+
+
+  

@@ -2,8 +2,7 @@ import axios from "axios";
 
 
 
-const Update=(dato)=>{
-  console.log(dato)
+export const Update=(dato)=>{
 
 
   const options = {
@@ -22,5 +21,20 @@ const Update=(dato)=>{
 
 }
 
+export const Check=(id)=>{
+ 
 
-export default Update;
+
+  const options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/${id}`,
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+
+
+}
