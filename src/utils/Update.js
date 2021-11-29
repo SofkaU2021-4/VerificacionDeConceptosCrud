@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export const Update=(dato)=>{
+export const UpdateTarea=(dato)=>{
 
 
   const options = {
@@ -21,7 +21,7 @@ export const Update=(dato)=>{
 
 }
 
-export const Check=(id)=>{
+export const CheckTarea=(id)=>{
  
 
 
@@ -35,6 +35,47 @@ export const Check=(id)=>{
   }).catch(function (error) {
     console.error(error);
   });
+
+
+}
+
+export const CheckToDo=(infoDato)=>{
+ 
+
+
+  const options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/ToDo/`,
+    headers: {'Content-Type': 'application/json'},
+    data: { id: infoDato.id, name:infoDato.name , id_tarea:infoDato.id_tarea , completed:infoDato.completed}
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+
+
+}
+
+export const UpdateToDo=(dato)=>{
+ 
+
+
+  const options = {
+    method: 'PATCH',
+    url: 'http://localhost:8080/ToDo/',
+    headers: {'Content-Type': 'application/json'},
+    data: { id: dato.id, name:dato.name ,id_tarea:dato.id_tarea}
+  };
+  
+  axios.request(options).then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+
 
 
 }

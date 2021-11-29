@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const Post=(formData)=>{
+export const PostTarea=(formData)=>{
     const options = {
         method: 'POST',
         url: 'http://localhost:8080/',
@@ -17,4 +17,18 @@ const Post=(formData)=>{
 
 }
 
-export default Post;
+export const PostToDo=(formData)=>{
+  const options = {
+      method: 'POST',
+      url: 'http://localhost:8080/ToDo/',
+      headers: {'Content-Type': 'application/json'},
+      data: {name: formData.name , id_tarea:formData.id_tarea}
+    };
+    
+    axios.request(options).then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+
+}

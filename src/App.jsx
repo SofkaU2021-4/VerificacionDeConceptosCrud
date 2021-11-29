@@ -4,7 +4,7 @@ import './App.css';
 import { useState } from 'react';
 import { EjecutarConsultaContext } from './context/EjecutarConsulta';
 import Tabla from './components/Tabla';
-import { Formulario } from './components/Formulario';
+import { FormularioListaTarea } from './components/FormularioListaTarea';
 
 
 
@@ -15,7 +15,7 @@ function App() {
   
   return (
     <EjecutarConsultaContext.Provider value={{ejecutarConsulta,setEjecutarConsulta}}>
-      <Formulario/>
+      <FormularioListaTarea />
       <Tabla/>
     </EjecutarConsultaContext.Provider>
   );
